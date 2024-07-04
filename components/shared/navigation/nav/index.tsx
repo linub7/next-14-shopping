@@ -13,8 +13,13 @@ const CustomNav = async (props: Props) => {
   return (
     <header className="py-8">
       <nav>
-        <ul className="flex justify-between">
-          <li>logo</li>
+        <ul className="flex justify-between items-center">
+          <li>
+            <Link href={'/'}>
+              {/* TODO: add project logo */}
+              Home
+            </Link>
+          </li>
           <li>
             {!session ? (
               <Button asChild>

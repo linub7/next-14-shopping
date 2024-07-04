@@ -8,6 +8,13 @@
       "when": 1720012580802,
       "tag": "0000_parallel_william_stryker",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1720080666239,
+      "tag": "0001_nifty_karma",
+      "breakpoints": true
     }
   ]
 }
