@@ -16,45 +16,64 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import AuthCard from '../../card';
-import { LoginSchema } from '@/types/schemas/login';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { emailSignin } from '@/server/actions/email-signin';
 import { cn } from '@/lib/utils';
+import { RegisterSchema } from '@/types/schemas/register';
+import { emailSignup } from '@/server/actions/email-signup';
+import AuthFormSuccessMessage from '../messages/success';
+import AuthFormErrorMessage from '../messages/error';
 
 type Props = {};
 
-const AuthLoginForm = (props: Props) => {
+const AuthRegisterForm = (props: Props) => {
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
       password: '',
+      name: '',
     },
   });
 
-  const { execute, status } = useAction(emailSignin, {
+  const { execute, status } = useAction(emailSignup, {
     onSuccess(data) {
-      console.log(data);
+      if (data?.data?.error) setError(data?.data?.error);
+      if (data?.data?.success) setSuccess(data?.data?.success);
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const handleSubmit = (values: z.infer<typeof RegisterSchema>) => {
     execute(values);
   };
   return (
     <AuthCard
-      cardTitle="Nice to see you again"
-      backButtonHref="/auth/register"
-      backButtonLabel="Do not have an account?"
+      cardTitle="Create an account 🎉"
+      backButtonHref="/auth/login"
+      backButtonLabel="Already have an account?"
       showSocials={true}
     >
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input {...field} type="text" placeholder="John Doe" />
+                    </FormControl>
+                    <FormDescription />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -93,9 +112,11 @@ const AuthLoginForm = (props: Props) => {
                   </FormItem>
                 )}
               />
-              <Button size={'sm'} variant={'link'} asChild>
+              <AuthFormSuccessMessage message={success} />
+              <AuthFormErrorMessage message={error} />
+              {/* <Button size={'sm'} variant={'link'} asChild>
                 <Link href={'/auth/reset'}>Forgot your password?</Link>
-              </Button>
+              </Button> */}
             </>
             <Button
               type="submit"
@@ -104,7 +125,7 @@ const AuthLoginForm = (props: Props) => {
                 status === 'executing' ? 'animate-pulse' : ''
               )}
             >
-              {'Login'}
+              {'Register'}
             </Button>
           </form>
         </Form>
@@ -113,4 +134,4 @@ const AuthLoginForm = (props: Props) => {
   );
 };
 
-export default AuthLoginForm;
+export default AuthRegisterForm;

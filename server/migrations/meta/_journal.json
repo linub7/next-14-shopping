@@ -15,6 +15,34 @@
       "when": 1720080666239,
       "tag": "0001_nifty_karma",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1720103346297,
+      "tag": "0002_low_saracen",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1720103467903,
+      "tag": "0003_third_tarot",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1720107242414,
+      "tag": "0004_abandoned_blob",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1720108366401,
+      "tag": "0005_sticky_champions",
+      "breakpoints": true
     }
   ]
 }
