@@ -21,11 +21,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { emailSignin } from '@/server/actions/email-signin';
 import { cn } from '@/lib/utils';
+import AuthFormSuccessMessage from '../../messages/success';
+import AuthFormErrorMessage from '../../messages/error';
 
 type Props = {};
 
 const AuthLoginForm = (props: Props) => {
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -37,7 +40,10 @@ const AuthLoginForm = (props: Props) => {
 
   const { execute, status } = useAction(emailSignin, {
     onSuccess(data) {
-      console.log(data);
+      if (data?.data?.error) setError(data?.data?.error);
+      if (data?.data?.success) {
+        setSuccess(data?.data.success);
+      }
     },
   });
 
@@ -96,6 +102,8 @@ const AuthLoginForm = (props: Props) => {
               <Button size={'sm'} variant={'link'} asChild>
                 <Link href={'/auth/reset'}>Forgot your password?</Link>
               </Button>
+              <AuthFormSuccessMessage message={success} />
+              <AuthFormErrorMessage message={error} />
             </>
             <Button
               type="submit"

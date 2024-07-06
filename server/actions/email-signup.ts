@@ -38,7 +38,7 @@ export const emailSignup = actionClient
     await db.insert(users).values({
       name,
       email,
-      // password: hashedPassword,
+      password: hashedPassword,
     });
 
     const verificationToken = await generateEmailVerificationToken(email);
