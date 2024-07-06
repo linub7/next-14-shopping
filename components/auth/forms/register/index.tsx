@@ -21,8 +21,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { RegisterSchema } from '@/types/schemas/register';
 import { emailSignup } from '@/server/actions/email-signup';
-import AuthFormSuccessMessage from '../messages/success';
-import AuthFormErrorMessage from '../messages/error';
+import AuthFormSuccessMessage from '../../messages/success';
+import AuthFormErrorMessage from '../../messages/error';
 
 type Props = {};
 

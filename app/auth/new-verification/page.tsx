@@ -1,5 +1,7 @@
+import AuthEmailVerificationForm from '@/components/auth/forms/email-verification';
+
 const NewVerificationPage = () => {
-  return <div>NewVerificationPage</div>;
+  return <AuthEmailVerificationForm />;
 };
 
 export default NewVerificationPage;
