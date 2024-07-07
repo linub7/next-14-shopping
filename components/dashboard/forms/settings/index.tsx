@@ -27,6 +27,7 @@ const DashboardSettingsForm = (user: User) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
+  console.log({ user });
 
   const form = useForm<z.infer<typeof DashboardSettingsSchema>>({
     resolver: zodResolver(DashboardSettingsSchema),
