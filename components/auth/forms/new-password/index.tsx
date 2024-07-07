@@ -21,10 +21,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/utils';
-import AuthFormSuccessMessage from '../../messages/success';
-import AuthFormErrorMessage from '../../messages/error';
-import { NewPasswordSchema } from '@/types/schemas/new-password';
+
 import { newPassword } from '@/server/actions/new-password';
+import FormErrorMessage from '@/components/shared/messages/error';
+import { NewPasswordSchema } from '@/types/schemas/auth/new-password';
+import FormSuccessMessage from '@/components/shared/messages/success';
 
 const AuthNewPasswordForm = () => {
   const token = useSearchParams().get('token');
@@ -80,8 +81,8 @@ const AuthNewPasswordForm = () => {
                   </FormItem>
                 )}
               />
-              <AuthFormSuccessMessage message={success} />
-              <AuthFormErrorMessage message={error} />
+              <FormSuccessMessage message={success} />
+              <FormErrorMessage message={error} />
             </>
             <Button
               type="submit"

@@ -4,7 +4,7 @@ type Props = {
   message?: string;
 };
 
-const AuthFormErrorMessage = (props: Props) => {
+const FormErrorMessage = (props: Props) => {
   const { message } = props;
   if (!message) return null;
   return (
@@ -15,4 +15,4 @@ const AuthFormErrorMessage = (props: Props) => {
   );
 };
 
-export default AuthFormErrorMessage;
+export default FormErrorMessage;

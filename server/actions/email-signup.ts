@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 import { db } from '..';
 import { users } from '../schema';
-import { RegisterSchema } from '@/types/schemas/register';
+import { RegisterSchema } from '@/types/schemas/auth/register';
 import { BCRYPT_SALT_ROUND } from '@/constants';
 import { generateEmailVerificationToken } from './tokens';
 import { sendVerificationEmail } from './email';

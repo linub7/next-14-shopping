@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { newVerification } from '@/server/actions/tokens';
 import AuthCard from '../../card';
-import AuthFormSuccessMessage from '../../messages/success';
-import AuthFormErrorMessage from '../../messages/error';
+import FormErrorMessage from '@/components/shared/messages/error';
+import FormSuccessMessage from '@/components/shared/messages/success';
 
 type Props = {};
 
@@ -54,8 +54,8 @@ const AuthEmailVerificationForm = (props: Props) => {
     >
       <div className="w-full flex flex-col justify-center items-center">
         <p>{!success && !error ? 'Verifying email...' : null}</p>
-        <AuthFormSuccessMessage message={success} />
-        <AuthFormErrorMessage message={error} />
+        <FormSuccessMessage message={success} />
+        <FormErrorMessage message={error} />
       </div>
     </AuthCard>
   );

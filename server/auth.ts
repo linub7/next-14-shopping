@@ -15,7 +15,7 @@ import {
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
 } from '@/utils/env';
-import { LoginSchema } from '@/types/schemas/login';
+import { LoginSchema } from '@/types/schemas/auth/login';
 import { users } from './schema';
 
 dotenv.config({

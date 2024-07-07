@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { LogOut, Moon, Settings, Sun, TruckIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import {
   DropdownMenu,
@@ -20,6 +21,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 const NavUserButton = ({ user }: Session) => {
   const [checked, setChecked] = useState(false);
   const { setTheme, theme } = useTheme();
+  const router = useRouter();
 
   const handleModeState = () => {
     switch (theme) {
@@ -31,6 +33,8 @@ const NavUserButton = ({ user }: Session) => {
         return setChecked(false);
     }
   };
+
+  const handleNavigate = (path: string) => router.push(path);
 
   const handleSignout = () => signOut();
   if (!user) return null;
@@ -72,14 +76,20 @@ const NavUserButton = ({ user }: Session) => {
           </span>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="group py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out">
+        <DropdownMenuItem
+          onClick={() => handleNavigate('/dashboard/orders')}
+          className="group py-2 font-medium cursor-pointer"
+        >
           <TruckIcon
             size={14}
             className="mr-3 group-hover:translate-x-1 transition-all duration-300 ease-in-out"
           />{' '}
           My Orders
         </DropdownMenuItem>
-        <DropdownMenuItem className="group py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out">
+        <DropdownMenuItem
+          onClick={() => handleNavigate('/dashboard/settings')}
+          className="group py-2 font-medium cursor-pointer "
+        >
           <Settings
             size={14}
             className="mr-3 group-hover:rotate-180 transition-all duration-300 ease-in-out"
@@ -87,7 +97,7 @@ const NavUserButton = ({ user }: Session) => {
           Settings
         </DropdownMenuItem>
         {theme && (
-          <DropdownMenuItem className="py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out">
+          <DropdownMenuItem className="py-2 font-medium cursor-pointer">
             <div
               onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1 group"
@@ -120,7 +130,7 @@ const NavUserButton = ({ user }: Session) => {
         )}
         <DropdownMenuItem
           onClick={handleSignout}
-          className="group py-2 font-medium cursor-pointer transition-all duration-500 ease-in-out focus:bg-destructive/50"
+          className="group py-2 font-medium cursor-pointer focus:bg-destructive/50"
         >
           <LogOut
             size={14}

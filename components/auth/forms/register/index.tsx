@@ -18,10 +18,10 @@ import AuthCard from '../../card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { RegisterSchema } from '@/types/schemas/register';
+import { RegisterSchema } from '@/types/schemas/auth/register';
 import { emailSignup } from '@/server/actions/email-signup';
-import AuthFormSuccessMessage from '../../messages/success';
-import AuthFormErrorMessage from '../../messages/error';
+import FormErrorMessage from '@/components/shared/messages/error';
+import FormSuccessMessage from '@/components/shared/messages/success';
 
 type Props = {};
 
@@ -118,8 +118,8 @@ const AuthRegisterForm = (props: Props) => {
                   </FormItem>
                 )}
               />
-              <AuthFormSuccessMessage message={success} />
-              <AuthFormErrorMessage message={error} />
+              <FormSuccessMessage message={success} />
+              <FormErrorMessage message={error} />
               {/* <Button size={'sm'} variant={'link'} asChild>
                 <Link href={'/auth/reset'}>Forgot your password?</Link>
               </Button> */}

@@ -4,7 +4,7 @@ type Props = {
   message?: string;
 };
 
-const AuthFormSuccessMessage = (props: Props) => {
+const FormSuccessMessage = (props: Props) => {
   const { message } = props;
   if (!message) return null;
   return (
@@ -15,4 +15,4 @@ const AuthFormSuccessMessage = (props: Props) => {
   );
 };
 
-export default AuthFormSuccessMessage;
+export default FormSuccessMessage;

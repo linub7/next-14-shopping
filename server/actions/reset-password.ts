@@ -11,7 +11,7 @@ import {
   getPasswordResetTokenByToken,
 } from './tokens';
 import { BCRYPT_SALT_ROUND } from '@/constants';
-import { ResetPasswordSchema } from '@/types/schemas/reset-password';
+import { ResetPasswordSchema } from '@/types/schemas/auth/reset-password';
 import { sendPasswordResetEmail } from './email';
 
 const actionClient = createSafeActionClient();

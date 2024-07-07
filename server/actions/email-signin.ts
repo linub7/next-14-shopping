@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import { createSafeActionClient } from 'next-safe-action';
 import { AuthError } from 'next-auth';
 
-import { LoginSchema } from '@/types/schemas/login';
+import { LoginSchema } from '@/types/schemas/auth/login';
 import { db } from '..';
 import { users } from '../schema';
 import { generateEmailVerificationToken } from './tokens';

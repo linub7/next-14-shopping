@@ -20,11 +20,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 import { cn } from '@/lib/utils';
-import AuthFormSuccessMessage from '../../messages/success';
-import AuthFormErrorMessage from '../../messages/error';
 
-import { ResetPasswordSchema } from '@/types/schemas/reset-password';
+import { ResetPasswordSchema } from '@/types/schemas/auth/reset-password';
 import { resetPassword } from '@/server/actions/reset-password';
+import FormErrorMessage from '@/components/shared/messages/error';
+import FormSuccessMessage from '@/components/shared/messages/success';
 
 const AuthResetPasswordForm = () => {
   const [error, setError] = useState('');
@@ -77,8 +77,8 @@ const AuthResetPasswordForm = () => {
                   </FormItem>
                 )}
               />
-              <AuthFormSuccessMessage message={success} />
-              <AuthFormErrorMessage message={error} />
+              <FormSuccessMessage message={success} />
+              <FormErrorMessage message={error} />
             </>
             <Button
               type="submit"
