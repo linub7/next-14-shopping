@@ -25,7 +25,8 @@ export const DashboardSettingsSchema = z
   })
   .refine(
     (data) => {
-      data?.password && !data?.newPassword ? false : true;
+      if (data?.password && !data?.newPassword) return false;
+      return true;
     }, // this will throw an error if new password is left empty
     { message: 'New Password is required', path: ['newPassword'] }
   );

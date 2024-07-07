@@ -5,7 +5,6 @@ import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { User } from 'next-auth';
 
 import {
   Form,
@@ -22,12 +21,22 @@ import { DashboardSettingsSchema } from '@/types/schemas/dashboard/settings';
 import { Switch } from '@/components/ui/switch';
 import FormErrorMessage from '@/components/shared/messages/error';
 import FormSuccessMessage from '@/components/shared/messages/success';
+import { updateSettings } from '@/server/actions/settings';
 
-const DashboardSettingsForm = (user: User) => {
+type Props = {
+  email: string;
+  id: string;
+  image?: string;
+  isTwoFactorEnabled?: boolean;
+  isOAuth?: boolean;
+  name: string;
+  role: string;
+};
+
+const DashboardSettingsForm = (user: Props) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
-  console.log({ user });
 
   const form = useForm<z.infer<typeof DashboardSettingsSchema>>({
     resolver: zodResolver(DashboardSettingsSchema),
@@ -36,23 +45,24 @@ const DashboardSettingsForm = (user: User) => {
       email: user?.email || undefined,
       password: undefined,
       newPassword: undefined,
-      //   isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+      image: user?.image || undefined,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
     },
   });
 
-  // const { execute, status } = useAction(emailSignin, {
-  //   onSuccess(data) {
-  //     if (data?.data?.error) setError(data?.data?.error);
-  //     if (data?.data?.success) {
-  //       setSuccess(data?.data.success);
-  //     }
-  //   },
-  // });
+  const { execute, status } = useAction(updateSettings, {
+    onSuccess(data) {
+      if (data?.data?.error) setError(data?.data?.error);
+      if (data?.data?.success) setSuccess(data?.data?.success);
+    },
+    onError() {
+      setError('OOPS! something went wrong');
+    },
+  });
 
-  // const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
-  //   execute(values);
-  // };
-  const handleSubmit = () => {};
+  const handleSubmit = (values: z.infer<typeof DashboardSettingsSchema>) =>
+    execute(values);
+
   return (
     <Form {...form}>
       <form
@@ -81,7 +91,7 @@ const DashboardSettingsForm = (user: User) => {
               </FormItem>
             )}
           />
-          <FormField
+          {/* <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
@@ -93,14 +103,14 @@ const DashboardSettingsForm = (user: User) => {
                     type="email"
                     autoComplete="email"
                     placeholder="johndoe@gmail.com"
-                    disabled={status === 'executing'}
+                    disabled={status === 'executing' || user?.isOAuth}
                   />
                 </FormControl>
                 <FormDescription />
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           <FormField
             control={form.control}
             name="image"
@@ -148,7 +158,7 @@ const DashboardSettingsForm = (user: User) => {
                     type="password"
                     autoComplete="current-password"
                     placeholder="******"
-                    disabled={status === 'executing'}
+                    disabled={status === 'executing' || user?.isOAuth}
                   />
                 </FormControl>
                 <FormDescription />
@@ -168,7 +178,7 @@ const DashboardSettingsForm = (user: User) => {
                     type="password"
                     autoComplete="current-password"
                     placeholder="******"
-                    disabled={status === 'executing'}
+                    disabled={status === 'executing' || user?.isOAuth}
                   />
                 </FormControl>
                 <FormDescription />
@@ -186,7 +196,7 @@ const DashboardSettingsForm = (user: User) => {
                   Enabled two factor authentication for your account
                 </FormDescription>
                 <FormControl>
-                  <Switch disabled={status === 'executing'} />
+                  <Switch disabled={status === 'executing' || user?.isOAuth} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
