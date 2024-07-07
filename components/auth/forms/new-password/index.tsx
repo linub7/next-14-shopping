@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAction } from 'next-safe-action/hooks';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'next/navigation';
 import * as z from 'zod';
 
 import {
@@ -15,89 +16,50 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import AuthCard from '../../card';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+
 import { cn } from '@/lib/utils';
-import { RegisterSchema } from '@/types/schemas/register';
-import { emailSignup } from '@/server/actions/email-signup';
 import AuthFormSuccessMessage from '../../messages/success';
 import AuthFormErrorMessage from '../../messages/error';
+import { NewPasswordSchema } from '@/types/schemas/new-password';
+import { newPassword } from '@/server/actions/new-password';
 
-type Props = {};
+const AuthNewPasswordForm = () => {
+  const token = useSearchParams().get('token');
 
-const AuthRegisterForm = (props: Props) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof NewPasswordSchema>>({
+    resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
-      name: '',
     },
   });
 
-  const { execute, status } = useAction(emailSignup, {
+  const { execute, status } = useAction(newPassword, {
     onSuccess(data) {
+      console.log(data);
       if (data?.data?.error) setError(data?.data?.error);
       if (data?.data?.success) setSuccess(data?.data?.success);
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof RegisterSchema>) => {
-    execute(values);
+  const handleSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+    execute({ password: values.password, token });
   };
   return (
     <AuthCard
-      cardTitle="Create an account 🎉"
+      cardTitle="Enter a new password"
       backButtonHref="/auth/login"
-      backButtonLabel="Already have an account?"
-      showSocials={true}
+      backButtonLabel="Back to login"
     >
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        placeholder="John Doe"
-                        disabled={status === 'executing'}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="email"
-                        autoComplete="email"
-                        placeholder="johndoe@gmail.com"
-                        disabled={status === 'executing'}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="password"
@@ -120,9 +82,6 @@ const AuthRegisterForm = (props: Props) => {
               />
               <AuthFormSuccessMessage message={success} />
               <AuthFormErrorMessage message={error} />
-              {/* <Button size={'sm'} variant={'link'} asChild>
-                <Link href={'/auth/reset'}>Forgot your password?</Link>
-              </Button> */}
             </>
             <Button
               type="submit"
@@ -131,7 +90,7 @@ const AuthRegisterForm = (props: Props) => {
                 status === 'executing' ? 'animate-pulse' : ''
               )}
             >
-              {'Register'}
+              {'New Password'}
             </Button>
           </form>
         </Form>
@@ -140,4 +99,4 @@ const AuthRegisterForm = (props: Props) => {
   );
 };
 
-export default AuthRegisterForm;
+export default AuthNewPasswordForm;

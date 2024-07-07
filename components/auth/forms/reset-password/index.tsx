@@ -15,69 +15,48 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import AuthCard from '../../card';
+
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+
 import { cn } from '@/lib/utils';
-import { RegisterSchema } from '@/types/schemas/register';
-import { emailSignup } from '@/server/actions/email-signup';
 import AuthFormSuccessMessage from '../../messages/success';
 import AuthFormErrorMessage from '../../messages/error';
 
-type Props = {};
+import { ResetPasswordSchema } from '@/types/schemas/reset-password';
+import { resetPassword } from '@/server/actions/reset-password';
 
-const AuthRegisterForm = (props: Props) => {
+const AuthResetPasswordForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: '',
-      password: '',
-      name: '',
     },
   });
 
-  const { execute, status } = useAction(emailSignup, {
+  const { execute, status } = useAction(resetPassword, {
     onSuccess(data) {
       if (data?.data?.error) setError(data?.data?.error);
       if (data?.data?.success) setSuccess(data?.data?.success);
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof RegisterSchema>) => {
+  const handleSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
     execute(values);
   };
   return (
     <AuthCard
-      cardTitle="Create an account 🎉"
+      cardTitle="Forgot your password?"
       backButtonHref="/auth/login"
-      backButtonLabel="Already have an account?"
-      showSocials={true}
+      backButtonLabel="Back to login"
     >
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        placeholder="John Doe"
-                        disabled={status === 'executing'}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="email"
@@ -98,31 +77,8 @@ const AuthRegisterForm = (props: Props) => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="password"
-                        autoComplete="current-password"
-                        placeholder="******"
-                        disabled={status === 'executing'}
-                      />
-                    </FormControl>
-                    <FormDescription />
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <AuthFormSuccessMessage message={success} />
               <AuthFormErrorMessage message={error} />
-              {/* <Button size={'sm'} variant={'link'} asChild>
-                <Link href={'/auth/reset'}>Forgot your password?</Link>
-              </Button> */}
             </>
             <Button
               type="submit"
@@ -131,7 +87,7 @@ const AuthRegisterForm = (props: Props) => {
                 status === 'executing' ? 'animate-pulse' : ''
               )}
             >
-              {'Register'}
+              {'Send Token'}
             </Button>
           </form>
         </Form>
@@ -140,4 +96,4 @@ const AuthRegisterForm = (props: Props) => {
   );
 };
 
-export default AuthRegisterForm;
+export default AuthResetPasswordForm;

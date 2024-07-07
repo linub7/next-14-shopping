@@ -43,6 +43,13 @@
       "when": 1720108366401,
       "tag": "0005_sticky_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1720276038764,
+      "tag": "0006_clumsy_star_brand",
+      "breakpoints": true
     }
   ]
 }

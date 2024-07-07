@@ -73,6 +73,7 @@ const AuthLoginForm = (props: Props) => {
                         type="email"
                         autoComplete="email"
                         placeholder="johndoe@gmail.com"
+                        disabled={status === 'executing'}
                       />
                     </FormControl>
                     <FormDescription />
@@ -92,6 +93,7 @@ const AuthLoginForm = (props: Props) => {
                         type="password"
                         autoComplete="current-password"
                         placeholder="******"
+                        disabled={status === 'executing'}
                       />
                     </FormControl>
                     <FormDescription />

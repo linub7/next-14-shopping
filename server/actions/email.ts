@@ -14,7 +14,21 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     from: 'Acme <onboarding@resend.dev>',
     to: email,
     subject: 'Shopping - Confirmation Email',
-    html: `<p>Click to <a href='${confirmLink}'>Confirm your email</a></p>`,
+    html: `<p>Click here to <a href='${confirmLink}'>Confirm your email</a></p>`,
+  });
+
+  if (error) return console.log(error);
+  if (data) return data;
+};
+
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const confirmLink = `${domain}/auth/new-password?token=${token}`;
+
+  const { data, error } = await resend.emails.send({
+    from: 'Acme <onboarding@resend.dev>',
+    to: email,
+    subject: 'Shopping - Confirmation Email',
+    html: `<p>Click here to <a href='${confirmLink}'>reset your password</a></p>`,
   });
 
   if (error) return console.log(error);
