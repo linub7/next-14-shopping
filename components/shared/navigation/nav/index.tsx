@@ -4,6 +4,7 @@ import { LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/server/auth';
 import NavUserButton from '../user-button';
+import NavLogo from '../logo';
 
 type Props = {};
 
@@ -15,9 +16,8 @@ const CustomNav = async (props: Props) => {
       <nav>
         <ul className="flex justify-between items-center">
           <li>
-            <Link href={'/'}>
-              {/* TODO: add project logo */}
-              Home
+            <Link href={'/'} aria-label="Shopping">
+              <NavLogo />
             </Link>
           </li>
           <li>
