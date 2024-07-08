@@ -50,6 +50,13 @@
       "when": 1720276038764,
       "tag": "0006_clumsy_star_brand",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1720413056711,
+      "tag": "0007_nasty_red_skull",
+      "breakpoints": true
     }
   ]
 }

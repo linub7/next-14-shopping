@@ -37,6 +37,7 @@ const DashboardSettingsForm = (user: Props) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
+  console.log({ user });
 
   const form = useForm<z.infer<typeof DashboardSettingsSchema>>({
     resolver: zodResolver(DashboardSettingsSchema),
@@ -52,8 +53,18 @@ const DashboardSettingsForm = (user: Props) => {
 
   const { execute, status } = useAction(updateSettings, {
     onSuccess(data) {
-      if (data?.data?.error) setError(data?.data?.error);
-      if (data?.data?.success) setSuccess(data?.data?.success);
+      if (data?.data?.error) {
+        setError(data?.data?.error);
+        setTimeout(() => {
+          setError('');
+        }, 3000);
+      }
+      if (data?.data?.success) {
+        setSuccess(data?.data?.success);
+        setTimeout(() => {
+          setSuccess('');
+        }, 3000);
+      }
     },
     onError() {
       setError('OOPS! something went wrong');
@@ -196,7 +207,11 @@ const DashboardSettingsForm = (user: Props) => {
                   Enabled two factor authentication for your account
                 </FormDescription>
                 <FormControl>
-                  <Switch disabled={status === 'executing' || user?.isOAuth} />
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    disabled={status === 'executing' || user?.isOAuth}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

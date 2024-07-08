@@ -62,12 +62,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google({
       clientId: GOOGLE_CLIENT_ID!,
       clientSecret: GOOGLE_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true,
     }),
     Github({
       clientId: GITHUB_CLIENT_ID!,
       clientSecret: GITHUB_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true,
     }),
     Credentials({
       authorize: async (credentials) => {

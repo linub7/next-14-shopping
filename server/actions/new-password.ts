@@ -6,12 +6,12 @@ import bcrypt from 'bcrypt';
 import { Pool } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
 
-import { NewPasswordSchema } from '@/types/schemas/new-password';
 import { db } from '..';
 import { passwordResetTokens, users } from '../schema';
 import { getPasswordResetTokenByToken } from './tokens';
 import { BCRYPT_SALT_ROUND } from '@/constants';
 import { POSTGRES_URL } from '@/utils/env';
+import { NewPasswordSchema } from '@/types/schemas/auth/new-password';
 
 const actionClient = createSafeActionClient();
 
