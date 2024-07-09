@@ -11,3 +11,5 @@ export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 export const RESEND_API_KEY = process.env.RESEND_API_KEY;
 export const VERCEL_URL = process.env.VERCEL_URL;
 export const DOMAIN_URL = process.env.DOMAIN_URL;
+export const UPLOADTHING_SECRET = process.env.UPLOADTHING_SECRET;
+export const UPLOADTHING_APP_ID = process.env.UPLOADTHING_APP_ID;

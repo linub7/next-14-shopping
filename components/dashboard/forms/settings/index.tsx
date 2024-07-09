@@ -22,22 +22,13 @@ import { Switch } from '@/components/ui/switch';
 import FormErrorMessage from '@/components/shared/messages/error';
 import FormSuccessMessage from '@/components/shared/messages/success';
 import { updateSettings } from '@/server/actions/settings';
+import { UserType } from '@/types/@types/user';
+import { UploadButton } from '@/app/api/uploadthing/upload';
 
-type Props = {
-  email: string;
-  id: string;
-  image?: string;
-  isTwoFactorEnabled?: boolean;
-  isOAuth?: boolean;
-  name: string;
-  role: string;
-};
-
-const DashboardSettingsForm = (user: Props) => {
+const DashboardSettingsForm = (user: UserType) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
-  console.log({ user });
 
   const form = useForm<z.infer<typeof DashboardSettingsSchema>>({
     resolver: zodResolver(DashboardSettingsSchema),
@@ -143,6 +134,32 @@ const DashboardSettingsForm = (user: Props) => {
                       height={42}
                     />
                   )}
+                  <UploadButton
+                    className="scale-75 ut-button:ring-primary ut-button:bg-primary/75 hover:ut-button:bg-primary/100 ut-button:transition-all ut-button:duration-500 ut-label:hidden ut-allowed-content:hidden"
+                    endpoint="avatarUploader"
+                    content={{
+                      button(ready) {
+                        if (ready) return <div>Change Avatar</div>;
+                        return <div>Uploading...</div>;
+                      },
+                    }}
+                    onUploadBegin={() => setIsAvatarUploading(true)}
+                    onUploadError={(error) => {
+                      console.log({ error });
+                      form.setError('image', {
+                        type: 'validate',
+                        message: error?.message,
+                      });
+                      setIsAvatarUploading(false);
+                      return;
+                    }}
+                    onClientUploadComplete={(res) => {
+                      console.log({ res });
+                      form.setValue('image', res[0].url!);
+                      setIsAvatarUploading(false);
+                      return;
+                    }}
+                  />
                 </div>
                 <FormControl>
                   <Input

@@ -1,5 +1,4 @@
 'use client';
-import { Session } from 'next-auth';
 
 import {
   Card,
@@ -9,9 +8,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import DashboardSettingsForm from '../../forms/settings';
+import { UserType } from '@/types/@types/user';
 
-const DashboardSettingsCard = (session: Session) => {
-  const { expires, user } = session;
+const DashboardSettingsCard = (user: UserType) => {
   return (
     <Card>
       <CardHeader>
