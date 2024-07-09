@@ -57,6 +57,13 @@
       "when": 1720413056711,
       "tag": "0007_nasty_red_skull",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1720515939260,
+      "tag": "0008_quiet_pyro",
+      "breakpoints": true
     }
   ]
 }
