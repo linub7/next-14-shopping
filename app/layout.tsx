@@ -5,6 +5,7 @@ import './globals.css';
 import CustomNav from '@/components/shared/navigation/nav';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import Toaster from '@/components/shared/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CustomNav />
+          <Toaster />
           {children}
         </ThemeProvider>
       </body>

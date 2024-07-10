@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useAction } from 'next-safe-action/hooks';
+import { useRouter } from 'next/navigation';
 import { DollarSign } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   Form,
@@ -15,17 +17,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { AddProductSchema } from '@/types/schemas/dashboard/product';
-import FormErrorMessage from '@/components/shared/messages/error';
-import FormSuccessMessage from '@/components/shared/messages/success';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/dashboard/add-product/tiptap';
+import { addProduct } from '@/server/actions/product/create';
 
 type Props = {};
 
 const DashboardAddProductForm = (props: Props) => {
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof AddProductSchema>>({
     resolver: zodResolver(AddProductSchema),
@@ -34,31 +34,30 @@ const DashboardAddProductForm = (props: Props) => {
       description: '',
       price: 0,
     },
+    mode: 'onChange',
   });
 
-  // const { execute, status } = useAction(updateSettings, {
-  //   onSuccess(data) {
-  //     if (data?.data?.error) {
-  //       setError(data?.data?.error);
-  //       setTimeout(() => {
-  //         setError('');
-  //       }, 3000);
-  //     }
-  //     if (data?.data?.success) {
-  //       setSuccess(data?.data?.success);
-  //       setTimeout(() => {
-  //         setSuccess('');
-  //       }, 3000);
-  //     }
-  //   },
-  //   onError() {
-  //     setError('OOPS! something went wrong');
-  //   },
-  // });
+  const { execute, status } = useAction(addProduct, {
+    onSuccess(data) {
+      if (data?.data?.error) {
+        toast.error(data?.data?.error);
+      }
+      if (data?.data?.success) {
+        toast.success(data?.data?.success);
+        router.push('/dashboard/products');
+      }
+    },
+    onError() {
+      toast.error('OOPS! something went wrong');
+    },
+    onExecute(data) {
+      toast.loading('Creating Product');
+    },
+  });
 
-  // const handleSubmit = (values: z.infer<typeof DashboardSettingsSchema>) =>
-  //   execute(values);
-  const handleSubmit = () => {};
+  const handleSubmit = (values: z.infer<typeof AddProductSchema>) =>
+    execute(values);
+
   return (
     <Form {...form}>
       <form
@@ -77,7 +76,7 @@ const DashboardAddProductForm = (props: Props) => {
                     {...field}
                     type="text"
                     placeholder="Product Title"
-                    // disabled={status === 'executing'}
+                    disabled={status === 'executing'}
                   />
                 </FormControl>
                 <FormMessage />
@@ -112,7 +111,7 @@ const DashboardAddProductForm = (props: Props) => {
                       placeholder="Your price in USD"
                       step={'0.1'}
                       min={0}
-                      // disabled={status === 'executing'}
+                      disabled={status === 'executing'}
                     />
                   </div>
                 </FormControl>
@@ -121,15 +120,13 @@ const DashboardAddProductForm = (props: Props) => {
             )}
           />
         </>
-        <FormErrorMessage message={error} />
-        <FormSuccessMessage message={success} />
         <Button
           type="submit"
-          //   disabled={
-          //     status === 'executing' ||
-          //     !form.formState.isValid ||
-          //     !form.formState.isDirty
-          //   }
+          disabled={
+            status === 'executing' ||
+            !form.formState.isValid ||
+            !form.formState.isDirty
+          }
         >
           Create Product
         </Button>
