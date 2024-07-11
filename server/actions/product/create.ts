@@ -1,6 +1,7 @@
 'use server';
 import { eq } from 'drizzle-orm';
 import { createSafeActionClient } from 'next-safe-action';
+import { revalidatePath } from 'next/cache';
 
 import { AddProductSchema } from '@/types/schemas/dashboard/product';
 import { db } from '@/server';
@@ -22,6 +23,7 @@ export const addProduct = actionClient
           .set({ title, description, price })
           .where(eq(products.id, id))
           .returning();
+        revalidatePath('/dashboard/products');
         return {
           success: `Product ${updatedProduct[0].title} updated successfully`,
         };
@@ -34,6 +36,7 @@ export const addProduct = actionClient
             price,
           })
           .returning();
+        revalidatePath('/dashboard/products');
         return {
           success: `Product ${newProduct[0].title} created successfully`,
         };

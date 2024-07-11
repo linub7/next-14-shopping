@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAction } from 'next-safe-action/hooks';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { DollarSign } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -21,11 +22,39 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Tiptap from '@/components/dashboard/add-product/tiptap';
 import { addProduct } from '@/server/actions/product/create';
+import { getProduct } from '@/server/actions/product/get-product';
 
-type Props = {};
+type Props = {
+  editMode?: string | null;
+};
 
 const DashboardAddProductForm = (props: Props) => {
+  const { editMode } = props;
   const router = useRouter();
+
+  useEffect(() => {
+    if (editMode) {
+      handleGetProduct(parseInt(editMode));
+    }
+  }, []);
+
+  const handleGetProduct = async (id: number) => {
+    if (editMode) {
+      const data = await getProduct({ id });
+      if (data?.data?.error) {
+        toast.error(data?.data?.error);
+        router.push('/dashboard/products');
+        return;
+      }
+      if (data?.data?.success) {
+        const id = parseInt(editMode);
+        form.setValue('id', id);
+        form.setValue('title', data?.data?.success.title);
+        form.setValue('description', data?.data?.success.description);
+        form.setValue('price', data?.data?.success.price);
+      }
+    }
+  };
 
   const form = useForm<z.infer<typeof AddProductSchema>>({
     resolver: zodResolver(AddProductSchema),
@@ -49,9 +78,6 @@ const DashboardAddProductForm = (props: Props) => {
     },
     onError() {
       toast.error('OOPS! something went wrong');
-    },
-    onExecute(data) {
-      toast.loading('Creating Product');
     },
   });
 
@@ -128,7 +154,7 @@ const DashboardAddProductForm = (props: Props) => {
             !form.formState.isDirty
           }
         >
-          Create Product
+          {editMode ? 'Save changes' : 'Create Product'}
         </Button>
       </form>
     </Form>

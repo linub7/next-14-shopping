@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Bold, Italic, List, ListOrdered, Strikethrough } from 'lucide-react';
@@ -15,6 +16,11 @@ type Props = {
 const Tiptap = (props: Props) => {
   const { val } = props;
   const { setValue } = useFormContext();
+
+  useEffect(() => {
+    if (editor?.isEmpty) editor?.commands?.setContent(val);
+  }, [val]);
+
   const editor = useEditor({
     extensions: [
       Placeholder.configure({
