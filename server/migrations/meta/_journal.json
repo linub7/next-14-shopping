@@ -64,6 +64,13 @@
       "when": 1720515939260,
       "tag": "0008_quiet_pyro",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1720686350788,
+      "tag": "0009_lean_network",
+      "breakpoints": true
     }
   ]
 }
