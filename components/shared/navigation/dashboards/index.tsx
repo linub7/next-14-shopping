@@ -15,7 +15,7 @@ const DashboardsNav = (props: Props) => {
   const pathname = usePathname();
 
   return (
-    <nav className="py-2 overflow-auto">
+    <nav className="py-2 overflow-auto mb-4">
       <ul className="flex items-center gap-6 text-xs font-semibold ">
         <AnimatePresence>
           {links?.map((link) => (
