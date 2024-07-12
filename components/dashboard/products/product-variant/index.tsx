@@ -25,7 +25,7 @@ const ProductVariant = (props: Props) => {
   return (
     <Dialog modal={false}>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-[640px] rounded-md">
         <DialogHeader>
           <DialogTitle>{editMode ? 'Edit' : 'Create'} your variant</DialogTitle>
           <DialogDescription>

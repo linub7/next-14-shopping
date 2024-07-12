@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { VariantsWithImagesTags } from '@/lib/infer-type';
 import AddVariantInputTags from '../../products/input-tags';
+import AddVariantImages from '../../products/add-variant-images';
 
 type Props = {
   editMode: boolean;
@@ -97,7 +98,7 @@ const AddVariantForm = (props: Props) => {
               </FormItem>
             )}
           />
-          {/* <AddVariantImages /> */}
+          <AddVariantImages />
         </>
         {editMode && variant && (
           <Button
