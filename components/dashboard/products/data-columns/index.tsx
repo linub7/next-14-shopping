@@ -105,7 +105,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
             <Tooltip>
               <TooltipTrigger asChild>
                 <span>
-                  <ProductVariant editMode={false}>
+                  <ProductVariant productID={row.original.id} editMode={false}>
                     <span className="text-primary">
                       <PlusCircle className="h-5 w-5" />
                     </span>

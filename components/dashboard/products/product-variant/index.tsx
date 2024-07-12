@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 import {
   Dialog,
@@ -22,8 +22,9 @@ type Props = {
 
 const ProductVariant = (props: Props) => {
   const { editMode, children, productID, variant } = props;
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <Dialog modal={false}>
+    <Dialog modal={false} open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-[640px] rounded-md">
         <DialogHeader>
@@ -36,6 +37,7 @@ const ProductVariant = (props: Props) => {
           editMode={editMode}
           productID={productID}
           variant={variant}
+          setIsModalOpen={setIsModalOpen}
         />
       </DialogContent>
     </Dialog>
