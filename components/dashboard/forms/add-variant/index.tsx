@@ -21,6 +21,7 @@ import { VariantsWithImagesTags } from '@/lib/infer-type';
 import AddVariantInputTags from '../../products/input-tags';
 import AddVariantImages from '../../products/add-variant-images';
 import { addVariant } from '@/server/actions/product/variant/create';
+import { deleteVariant } from '@/server/actions/product/variant/delete';
 
 type Props = {
   editMode: boolean;
@@ -90,6 +91,22 @@ const AddVariantForm = (props: Props) => {
   const handleSubmit = (values: z.infer<typeof AddVariantSchema>) =>
     execute(values);
 
+  const deleteAction = useAction(deleteVariant, {
+    onSuccess(data) {
+      if (data?.data?.error) toast.error(data?.data?.error);
+      if (data?.data?.success) toast.success(data?.data?.success);
+      setIsModalOpen(false);
+    },
+    onError(error) {
+      console.log(error);
+      toast.error('OOPS! something went wrong');
+    },
+  });
+
+  const handleDeleteVariant = async (id: number) => {
+    deleteAction.execute({ id });
+  };
+
   return (
     <Form {...form}>
       <form
@@ -152,12 +169,11 @@ const AddVariantForm = (props: Props) => {
             <Button
               variant={'destructive'}
               type="button"
-              onClick={(e) => e.preventDefault()}
-              disabled={
-                status === 'executing' ||
-                !form.formState.isValid ||
-                !form.formState.isDirty
-              }
+              onClick={(e) => {
+                e.preventDefault();
+                handleDeleteVariant(variant?.id);
+              }}
+              disabled={deleteAction.status === 'executing'}
             >
               Delete Variant
             </Button>
