@@ -13,3 +13,8 @@ export const VERCEL_URL = process.env.VERCEL_URL;
 export const DOMAIN_URL = process.env.DOMAIN_URL;
 export const UPLOADTHING_SECRET = process.env.UPLOADTHING_SECRET;
 export const UPLOADTHING_APP_ID = process.env.UPLOADTHING_APP_ID;
+export const NEXT_PUBLIC_ALGOLIA_APPLICATION_ID =
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID;
+export const NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY =
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY;
+export const ALGOLIA_WRITE_API_KEY = process.env.ALGOLIA_WRITE_API_KEY;
