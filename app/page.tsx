@@ -1,7 +1,20 @@
-export default function Home() {
+import HomeProducts from '@/components/home/products';
+import { db } from '@/server';
+
+export default async function Home() {
+  const data = await db.query.productVariants.findMany({
+    with: {
+      variantImages: true,
+      variantTags: true,
+      product: true,
+    },
+    orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
+  });
+
+  if (!data) throw new Error('No Products found');
   return (
     <main>
-      <h1>hey</h1>
+      <HomeProducts variants={data} />
     </main>
   );
 }
