@@ -6,6 +6,7 @@ import SingleProductPageProductType from '@/components/home/single-product/produ
 import { Separator } from '@/components/ui/separator';
 import { priceFormatter } from '@/lib/price-formatter';
 import SingleProductPageProductPick from '@/components/home/single-product/product-pick';
+import SingleProductPageShowCase from '@/components/home/single-product/show-case';
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -50,25 +51,29 @@ const SingleProductPage = async (props: Props) => {
   if (variant) {
     return (
       <main>
-        <section>
-          <div>
-            <h1>Images</h1>
+        <section className="flex flex-col lg:flex-row gap-4 lg:gap-12">
+          <div className="flex-1">
+            <SingleProductPageShowCase
+              variants={variant.product.productVariants}
+            />
           </div>
-          <div className="flex gap-2 flex-col flex-1">
-            <h2 className="">{variant?.product?.title}</h2>
+          <div className="flex  flex-col flex-1">
+            <h2 className="text-2xl font-bold">{variant?.product?.title}</h2>
             <div>
               <SingleProductPageProductType
                 variants={variant.product.productVariants}
               />
             </div>
-            <Separator />
-            <p className="text-2xl font-medium">
+            <Separator className="my-2" />
+            <p className="text-2xl font-medium py-2">
               {priceFormatter(variant.product.price)}
             </p>
             <div
               dangerouslySetInnerHTML={{ __html: variant.product.description }}
             ></div>
-            <p className="text-secondary-foreground">Available colors</p>
+            <p className="text-secondary-foreground font-medium my-2">
+              Available colors
+            </p>
             <div className="flex gap-4">
               {variant.product.productVariants.map((item) => (
                 <SingleProductPageProductPick
