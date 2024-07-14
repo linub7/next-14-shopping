@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { priceFormatter } from '@/lib/price-formatter';
 import SingleProductPageProductPick from '@/components/home/single-product/product-pick';
 import SingleProductPageShowCase from '@/components/home/single-product/show-case';
+import SingleProductPageReviews from '@/components/home/single-product/reviews';
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -90,6 +91,7 @@ const SingleProductPage = async (props: Props) => {
             </div>
           </div>
         </section>
+        <SingleProductPageReviews productID={variant.productID} />
       </main>
     );
   }

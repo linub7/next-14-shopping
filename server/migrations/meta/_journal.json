@@ -71,6 +71,13 @@
       "when": 1720686350788,
       "tag": "0009_lean_network",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1720939531248,
+      "tag": "0010_clear_shiva",
+      "breakpoints": true
     }
   ]
 }
