@@ -41,14 +41,9 @@ const NavUserButton = ({ user }: Session) => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className="h-8 w-8">
           {user?.image && user?.name && (
-            <Image
-              className="rounded-full"
-              src={user?.image}
-              alt={user.name}
-              fill={true}
-            />
+            <Image src={user?.image} alt={user.name} fill={true} />
           )}
           {!user?.image && (
             <AvatarFallback className="bg-primary/25">
