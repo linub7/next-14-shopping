@@ -2,12 +2,14 @@ import { eq } from 'drizzle-orm';
 
 import { db } from '@/server';
 import { productVariants } from '@/server/schema';
-import SingleProductPageProductType from '@/components/home/single-product/product-type';
+import SingleProductPageProductType from '@/components/single-product/product-type';
 import { Separator } from '@/components/ui/separator';
 import { priceFormatter } from '@/lib/price-formatter';
-import SingleProductPageProductPick from '@/components/home/single-product/product-pick';
-import SingleProductPageShowCase from '@/components/home/single-product/show-case';
-import SingleProductPageReviews from '@/components/home/single-product/reviews';
+import SingleProductPageProductPick from '@/components/single-product/product-pick';
+import SingleProductPageShowCase from '@/components/single-product/show-case';
+import SingleProductPageReviews from '@/components/single-product/reviews';
+import { getReviewAverage } from '@/lib/review-average';
+import SingleProductPageReviewsListStars from '@/components/single-product/reviews/stars';
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -37,6 +39,7 @@ const SingleProductPage = async (props: Props) => {
     with: {
       product: {
         with: {
+          reviews: true,
           productVariants: {
             with: {
               variantImages: true,
@@ -50,6 +53,9 @@ const SingleProductPage = async (props: Props) => {
     },
   });
   if (variant) {
+    const reviewsAvg = getReviewAverage(
+      variant?.product?.reviews?.map((r) => r.rating)
+    );
     return (
       <main>
         <section className="flex flex-col lg:flex-row gap-4 lg:gap-12">
@@ -63,6 +69,10 @@ const SingleProductPage = async (props: Props) => {
             <div>
               <SingleProductPageProductType
                 variants={variant.product.productVariants}
+              />
+              <SingleProductPageReviewsListStars
+                rating={reviewsAvg}
+                totalReviews={variant.product.reviews.length}
               />
             </div>
             <Separator className="my-2" />

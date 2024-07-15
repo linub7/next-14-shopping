@@ -154,7 +154,6 @@ const DashboardSettingsForm = (user: UserType) => {
                       return;
                     }}
                     onClientUploadComplete={(res) => {
-                      console.log({ res });
                       form.setValue('image', res[0].url!);
                       setIsAvatarUploading(false);
                       return;

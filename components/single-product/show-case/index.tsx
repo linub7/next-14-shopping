@@ -9,8 +9,6 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel';
 import { VariantsWithImagesTags } from '@/lib/infer-type';
 import { cn } from '@/lib/utils';

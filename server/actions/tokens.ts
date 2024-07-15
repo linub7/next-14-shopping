@@ -45,16 +45,13 @@ export const generateEmailVerificationToken = async (email: string) => {
 
 export const newVerification = async (token: string) => {
   const existingToken = await getVerificationTokenByEmail(token);
-  console.log({ existingToken });
   if (!existingToken) return { error: 'Token not found' };
   const isExpired = new Date(existingToken?.expires) < new Date();
-  console.log({ isExpired });
   if (isExpired) return { error: 'Token is expired' };
 
   const existingUser = await db.query.users.findFirst({
     where: eq(users.email, existingToken.email),
   });
-  console.log({ existingUser });
   if (!existingUser) return { error: 'Email does not exist' };
   await db.update(users).set({
     emailVerified: new Date(),

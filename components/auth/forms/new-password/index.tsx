@@ -42,7 +42,6 @@ const AuthNewPasswordForm = () => {
 
   const { execute, status } = useAction(newPassword, {
     onSuccess(data) {
-      console.log(data);
       if (data?.data?.error) setError(data?.data?.error);
       if (data?.data?.success) setSuccess(data?.data?.success);
     },

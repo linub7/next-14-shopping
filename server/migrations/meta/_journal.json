@@ -78,6 +78,20 @@
       "when": 1720939531248,
       "tag": "0010_clear_shiva",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1720968981200,
+      "tag": "0011_solid_vance_astro",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1720969354506,
+      "tag": "0012_blushing_mojo",
+      "breakpoints": true
     }
   ]
 }
