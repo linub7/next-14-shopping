@@ -1,17 +1,50 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 import { useCartStore } from '@/lib/client-store';
+import { Button } from '@/components/ui/button';
 
 type Props = {};
 
 const CartDrawer = (props: Props) => {
   const { cart } = useCartStore();
   return (
-    <div>
-      <ShoppingBag />
-    </div>
+    <Drawer>
+      <DrawerTrigger>
+        <div className="relative px-2">
+          <AnimatePresence>
+            {cart.length > 0 && (
+              <motion.span
+                animate={{ scale: 1, opacity: 1 }}
+                initial={{ opacity: 0, scale: 0 }}
+                exit={{ scale: 0 }}
+                className="absolute flex items-center justify-center -top-0.5 right-0 w-4 h-4 bg-primary text-xs text-white font-bold rounded-full"
+              >
+                {cart.length}
+              </motion.span>
+            )}
+          </AnimatePresence>
+          <ShoppingBag />
+        </div>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <h1>Cart Stuff</h1>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

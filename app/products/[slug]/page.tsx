@@ -10,6 +10,7 @@ import SingleProductPageShowCase from '@/components/single-product/show-case';
 import SingleProductPageReviews from '@/components/single-product/reviews';
 import { getReviewAverage } from '@/lib/review-average';
 import SingleProductPageReviewsListStars from '@/components/single-product/reviews/stars';
+import SingleProductPageAddToCart from '@/components/single-product/add-to-cart';
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -99,6 +100,7 @@ const SingleProductPage = async (props: Props) => {
                 />
               ))}
             </div>
+            <SingleProductPageAddToCart />
           </div>
         </section>
         <SingleProductPageReviews productID={variant.productID} />

@@ -4,7 +4,7 @@ export type Variant = {
 };
 
 export type CartItem = {
-  nama: string;
+  name: string;
   image: string;
   id: number;
   variant: Variant;
