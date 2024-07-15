@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/drawer';
 import { useCartStore } from '@/lib/client-store';
 import { Button } from '@/components/ui/button';
+import CartItems from '../items';
 
 type Props = {};
 
@@ -41,8 +42,10 @@ const CartDrawer = (props: Props) => {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <h1>Cart Stuff</h1>
+          <DrawerTitle>Card Stuff</DrawerTitle>
+          <DrawerDescription>Your Shopping Card</DrawerDescription>
         </DrawerHeader>
+        <CartItems />
       </DrawerContent>
     </Drawer>
   );
