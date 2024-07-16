@@ -14,7 +14,6 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { useCartStore } from '@/lib/client-store';
-import { Button } from '@/components/ui/button';
 import CartItems from '../items';
 
 type Props = {};
@@ -40,12 +39,16 @@ const CartDrawer = (props: Props) => {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Card Stuff</DrawerTitle>
-          <DrawerDescription>Your Shopping Card</DrawerDescription>
+      <DrawerContent className="min-h-50vh">
+        <DrawerHeader className="w-full flex flex-col items-center justify-center">
+          <DrawerTitle>Cart Progress</DrawerTitle>
+          <DrawerDescription>
+            {cart.length > 0 ? 'Your Shopping Card' : ''}
+          </DrawerDescription>
         </DrawerHeader>
-        <CartItems />
+        <div className="overflow-auto p-4">
+          <CartItems />
+        </div>
       </DrawerContent>
     </Drawer>
   );

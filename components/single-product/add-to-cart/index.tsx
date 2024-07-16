@@ -31,7 +31,7 @@ const SingleProductPageAddToCart = (props: Props) => {
     addToCart({
       id: productID,
       image,
-      name: title + type,
+      name: `${title} ${type}`,
       price,
       variant: {
         quantity,

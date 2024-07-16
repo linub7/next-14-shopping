@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn('px-6 md:px-12 max-w-7xl m-auto', `${inter.className}`)}
+        className={cn('px-6 md:px-12 max-w-8xl m-auto', `${inter.className}`)}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <CustomNav />
