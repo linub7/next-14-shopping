@@ -7,6 +7,8 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       cart: [],
+      checkoutProgress: 'cart-page',
+      setCheckoutProgress: (val) => set((state) => ({ checkoutProgress: val })),
       addToCart: (item) =>
         set((state) => {
           const existingItem = state.cart.find(

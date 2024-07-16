@@ -15,11 +15,12 @@ import {
 } from '@/components/ui/drawer';
 import { useCartStore } from '@/lib/client-store';
 import CartItems from '../items';
+import CartMessage from '../message';
 
 type Props = {};
 
 const CartDrawer = (props: Props) => {
-  const { cart } = useCartStore();
+  const { cart, checkoutProgress } = useCartStore();
   return (
     <Drawer>
       <DrawerTrigger>
@@ -41,13 +42,10 @@ const CartDrawer = (props: Props) => {
       </DrawerTrigger>
       <DrawerContent className="min-h-50vh">
         <DrawerHeader className="w-full flex flex-col items-center justify-center">
-          <DrawerTitle>Cart Progress</DrawerTitle>
-          <DrawerDescription>
-            {cart.length > 0 ? 'Your Shopping Card' : ''}
-          </DrawerDescription>
+          <CartMessage />
         </DrawerHeader>
         <div className="overflow-auto p-4">
-          <CartItems />
+          {checkoutProgress === 'cart-page' && <CartItems />}
         </div>
       </DrawerContent>
     </Drawer>

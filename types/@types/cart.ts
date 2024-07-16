@@ -13,6 +13,10 @@ export type CartItem = {
 
 export type CartState = {
   cart: CartItem[];
+  checkoutProgress: 'cart-page' | 'payment-page' | 'confirmation-page';
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
+  setCheckoutProgress: (
+    val: 'cart-page' | 'payment-page' | 'confirmation-page'
+  ) => void;
 };
