@@ -16,11 +16,12 @@ import {
 import { useCartStore } from '@/lib/client-store';
 import CartItems from '../items';
 import CartMessage from '../message';
+import CartPayment from '../payment';
 
 type Props = {};
 
 const CartDrawer = (props: Props) => {
-  const { cart, checkoutProgress } = useCartStore();
+  const { cart, checkoutProgress, setCheckoutProgress } = useCartStore();
   return (
     <Drawer>
       <DrawerTrigger>
@@ -45,7 +46,15 @@ const CartDrawer = (props: Props) => {
           <CartMessage />
         </DrawerHeader>
         <div className="overflow-auto p-4">
-          {checkoutProgress === 'cart-page' && <CartItems />}
+          {checkoutProgress === 'cart-page' ? (
+            <CartItems />
+          ) : checkoutProgress === 'payment-page' ? (
+            <CartPayment />
+          ) : checkoutProgress === 'confirmation-page' ? (
+            <div onClick={() => setCheckoutProgress('cart-page')}>
+              Confirmation Page
+            </div>
+          ) : null}
         </div>
       </DrawerContent>
     </Drawer>

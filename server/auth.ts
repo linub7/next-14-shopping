@@ -6,6 +6,7 @@ import Credentials from 'next-auth/providers/credentials';
 import dotenv from 'dotenv';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
+import Stripe from 'stripe';
 
 import { db } from '@/server';
 import {
@@ -14,6 +15,7 @@ import {
   GITHUB_CLIENT_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
+  STRIPE_SECRET,
 } from '@/utils/env';
 import { LoginSchema } from '@/types/schemas/auth/login';
 import { accounts, users } from './schema';
@@ -26,6 +28,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db),
   secret: AUTH_SECRET!,
   session: { strategy: 'jwt' },
+  events: {
+    createUser: async ({ user }) => {
+      console.log('events create user');
+      const stripe = new Stripe(STRIPE_SECRET!, {
+        apiVersion: '2024-04-10',
+      });
+      const customer = await stripe.customers.create({
+        email: user.email!,
+        name: user.name!,
+      });
+      console.log({ customer });
+      await db
+        .update(users)
+        .set({
+          customerID: customer.id,
+        })
+        .where(eq(users.id, user.id!));
+    },
+  },
   callbacks: {
     async session({ session, token }) {
       if (session && token.sub) session.user.id = token.sub;
