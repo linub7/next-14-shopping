@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 
 import { useCartStore } from '@/lib/client-store';
 import { DrawerDescription, DrawerTitle } from '@/components/ui/drawer';
-import { ArrowLeft } from 'lucide-react';
 
 type Props = {};
 
@@ -33,7 +33,7 @@ const CartMessage = (props: Props) => {
             <ArrowLeft size={14} />
           </span>
         ) : checkoutProgress === 'confirmation-page' ? (
-          'Order Confirmed'
+          ''
         ) : null}
       </DrawerDescription>
     </motion.div>

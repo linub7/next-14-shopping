@@ -27,7 +27,7 @@ const CartPaymentForm = (props: Props) => {
 
   const stripe = useStripe();
   const elements = useElements();
-  const { cart, setCheckoutProgress } = useCartStore();
+  const { cart, setCheckoutProgress, clearCart } = useCartStore();
 
   const { execute } = useAction(createOrder, {
     onSuccess(data) {
@@ -40,6 +40,7 @@ const CartPaymentForm = (props: Props) => {
         setIsLoading(false);
         toast.success(data?.data?.success);
         setCheckoutProgress('confirmation-page');
+        clearCart();
       }
     },
   });

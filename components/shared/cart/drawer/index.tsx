@@ -5,18 +5,15 @@ import { ShoppingBag } from 'lucide-react';
 
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { useCartStore } from '@/lib/client-store';
 import CartItems from '../items';
 import CartMessage from '../message';
 import CartPayment from '../payment';
+import OrderConfirmed from '../order-confirmed';
 
 type Props = {};
 
@@ -51,9 +48,7 @@ const CartDrawer = (props: Props) => {
           ) : checkoutProgress === 'payment-page' ? (
             <CartPayment />
           ) : checkoutProgress === 'confirmation-page' ? (
-            <div onClick={() => setCheckoutProgress('cart-page')}>
-              Confirmation Page
-            </div>
+            <OrderConfirmed />
           ) : null}
         </div>
       </DrawerContent>

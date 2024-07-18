@@ -19,4 +19,5 @@ export type CartState = {
   setCheckoutProgress: (
     val: 'cart-page' | 'payment-page' | 'confirmation-page'
   ) => void;
+  clearCart: () => void;
 };

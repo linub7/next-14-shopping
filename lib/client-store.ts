@@ -61,6 +61,7 @@ export const useCartStore = create<CartState>()(
             cart: updatedCart.filter((item) => item.variant.quantity > 0),
           };
         }),
+      clearCart: () => set((state) => ({ cart: [] })),
     }),
     { name: 'cart-storage' }
   )
