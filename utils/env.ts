@@ -21,3 +21,4 @@ export const ALGOLIA_WRITE_API_KEY = process.env.ALGOLIA_WRITE_API_KEY;
 export const NEXT_PUBLIC_STRIPE_PUBLISH_KEY =
   process.env.NEXT_PUBLIC_STRIPE_PUBLISH_KEY;
 export const STRIPE_SECRET = process.env.STRIPE_SECRET;
+export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;

@@ -9,6 +9,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { useAction } from 'next-safe-action/hooks';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 import { useCartStore } from '@/lib/client-store';
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,7 @@ type Props = {
 
 const CartPaymentForm = (props: Props) => {
   const { totalPrice } = props;
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -28,6 +30,8 @@ const CartPaymentForm = (props: Props) => {
   const stripe = useStripe();
   const elements = useElements();
   const { cart, setCheckoutProgress, clearCart } = useCartStore();
+
+  const amount = Number(totalPrice.toFixed(2)) * 100;
 
   const { execute } = useAction(createOrder, {
     onSuccess(data) {
@@ -59,7 +63,7 @@ const CartPaymentForm = (props: Props) => {
       return;
     }
     const data = await createPaymentIntent({
-      amount: totalPrice * 100,
+      amount,
       currency: 'usd',
       cart: cart.map((item) => ({
         quantity: item.variant.quantity,
@@ -72,6 +76,7 @@ const CartPaymentForm = (props: Props) => {
     if (data?.data?.error) {
       setErrorMessage(data?.data?.error);
       setIsLoading(false);
+      router.push('/auth/login');
       return;
     }
     if (data?.data?.success) {
@@ -93,6 +98,7 @@ const CartPaymentForm = (props: Props) => {
         execute({
           total: totalPrice,
           status: 'pending',
+          paymentIntentID: data?.data?.success?.paymentIntentID,
           products: cart.map((item) => ({
             quantity: item?.variant?.quantity,
             variantID: item?.variant?.variantID,

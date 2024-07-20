@@ -19,6 +19,8 @@ const CartPayment = (props: Props) => {
   const totalPrice = cart.reduce((acc, item) => {
     return acc + item.price * item.variant.quantity;
   }, 0);
+
+  const amount = Number(totalPrice.toFixed(2)) * 100;
   return (
     <motion.div className="max-w-2xl mx-auto">
       <Elements
@@ -26,7 +28,7 @@ const CartPayment = (props: Props) => {
         options={{
           mode: 'payment',
           currency: 'usd',
-          amount: totalPrice * 100,
+          amount,
           appearance: { theme: theme === 'dark' ? 'night' : 'flat' },
         }}
       >
