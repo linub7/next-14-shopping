@@ -33,7 +33,7 @@ const CartMessage = (props: Props) => {
             <ArrowLeft size={14} />
           </span>
         ) : checkoutProgress === 'confirmation-page' ? (
-          ''
+          'You will receive an email with your receipt!'
         ) : null}
       </DrawerDescription>
     </motion.div>

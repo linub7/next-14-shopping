@@ -17,6 +17,9 @@ const SingleProductPageReviewsList = (props: Props) => {
   const { reviews } = props;
   return (
     <motion.div className="flex flex-col gap-4 my-2">
+      {reviews?.length === 0 && (
+        <p className="py-2 text-base font-medium">No Reviews yet</p>
+      )}
       {reviews?.map((review) => (
         <Card key={review.id} className="p-4">
           <div className="flex items-center gap-2">
@@ -38,16 +41,6 @@ const SingleProductPageReviewsList = (props: Props) => {
             </div>
           </div>
           <p className="py-2 font-medium">{review.comment}</p>
-          {/* <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter> */}
         </Card>
       ))}
     </motion.div>

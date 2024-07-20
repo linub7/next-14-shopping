@@ -12,6 +12,8 @@ import { getReviewAverage } from '@/lib/review-average';
 import SingleProductPageReviewsListStars from '@/components/single-product/reviews/stars';
 import SingleProductPageAddToCart from '@/components/single-product/add-to-cart';
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
     with: {

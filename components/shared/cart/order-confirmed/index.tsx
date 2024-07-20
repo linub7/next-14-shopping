@@ -11,19 +11,9 @@ import orderConfirmed from '@/public/order-confirmed.json';
 type Props = {};
 
 const OrderConfirmed = (props: Props) => {
-  const { setCheckoutProgress } = useCartStore();
+  const { setCheckoutProgress, setCartOpen } = useCartStore();
   return (
     <div className="flex flex-col items-center gap-4">
-      <h2 className="text-2xl font-medium">Thank you for your purchased</h2>
-      <Link href={`/dashboard/orders`}>
-        <Button
-          onClick={() => {
-            setCheckoutProgress('cart-page');
-          }}
-        >
-          View your Orders
-        </Button>
-      </Link>
       <motion.div
         animate={{
           opacity: 1,
@@ -32,8 +22,20 @@ const OrderConfirmed = (props: Props) => {
         initial={{ opacity: 0, scale: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <Lottie animationData={orderConfirmed} className="h-48 my-4" />
+        <Lottie animationData={orderConfirmed} className="h-56 my-4" />
       </motion.div>
+      <h2 className="text-2xl font-medium">Thank you for your purchased</h2>
+      <Link href={`/dashboard/orders`}>
+        <Button
+          onClick={() => {
+            setCheckoutProgress('cart-page');
+            setCartOpen(false);
+          }}
+          variant={'secondary'}
+        >
+          View your Orders
+        </Button>
+      </Link>
     </div>
   );
 };

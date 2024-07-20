@@ -7,6 +7,7 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       cart: [],
+      cartOpen: false,
       checkoutProgress: 'cart-page',
       setCheckoutProgress: (val) => set((state) => ({ checkoutProgress: val })),
       addToCart: (item) =>
@@ -62,6 +63,7 @@ export const useCartStore = create<CartState>()(
           };
         }),
       clearCart: () => set((state) => ({ cart: [] })),
+      setCartOpen: (val) => set((state) => ({ cartOpen: val })),
     }),
     { name: 'cart-storage' }
   )

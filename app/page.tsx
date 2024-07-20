@@ -1,6 +1,8 @@
 import HomeProducts from '@/components/home/products';
 import { db } from '@/server';
 
+export const revalidate = 60 * 60;
+
 export default async function Home() {
   const data = await db.query.productVariants.findMany({
     with: {

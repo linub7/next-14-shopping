@@ -22,13 +22,13 @@ const SingleProductPageReviews = async (props: Props) => {
 
   return (
     <section className="py-8">
-      <h2 className="text-2xl font-bold mb-4">Product Reviews</h2>
       <div className="flex flex-col lg:flex-row gap-2 lg:gap-12 justify-stretch">
         <div className="flex-1">
+          <h2 className="text-2xl font-bold mb-4">Product Reviews</h2>
+          <ReviewsForm />
           <SingleProductPageReviewsList reviews={data} />
         </div>
         <div className="flex-1 flex flex-col gap-2">
-          <ReviewsForm />
           <ReviewsChart reviews={data} />
         </div>
       </div>

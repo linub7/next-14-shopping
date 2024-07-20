@@ -18,9 +18,9 @@ import OrderConfirmed from '../order-confirmed';
 type Props = {};
 
 const CartDrawer = (props: Props) => {
-  const { cart, checkoutProgress, setCheckoutProgress } = useCartStore();
+  const { cart, checkoutProgress, cartOpen, setCartOpen } = useCartStore();
   return (
-    <Drawer>
+    <Drawer open={cartOpen} onOpenChange={setCartOpen}>
       <DrawerTrigger>
         <div className="relative px-2">
           <AnimatePresence>
@@ -38,7 +38,7 @@ const CartDrawer = (props: Props) => {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent className="min-h-50vh">
+      <DrawerContent className="fixed bottom-0 left-0 max-h-[70vh] min-h-50vh">
         <DrawerHeader className="w-full flex flex-col items-center justify-center">
           <CartMessage />
         </DrawerHeader>
