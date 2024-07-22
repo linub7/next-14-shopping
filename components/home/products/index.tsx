@@ -1,7 +1,9 @@
 'use client';
 
+import { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 import { VariantsWithImagesTagsProduct } from '@/lib/infer-type';
 import { Badge } from '@/components/ui/badge';
@@ -13,9 +15,19 @@ type Props = {
 
 const HomeProducts = (props: Props) => {
   const { variants } = props;
+  const searchParams = useSearchParams();
+  const paramTag = searchParams.get('tag');
+
+  const filteredVariants = useMemo(() => {
+    if (!paramTag && variants) return variants;
+    if (paramTag && variants)
+      return variants.filter((variant) =>
+        variant.variantTags.some((tag) => tag.tag === paramTag)
+      );
+  }, [paramTag]);
   return (
     <main className="grid sm:grid-cols-1 md:grid-cols-2 gap-12 lg:grid-cols-3 h-[300px]">
-      {variants?.map((variant) => (
+      {filteredVariants?.map((variant) => (
         <Link
           className="py-2"
           key={variant.id}
