@@ -14,6 +14,7 @@ import CartItems from '../items';
 import CartMessage from '../message';
 import CartPayment from '../payment';
 import OrderConfirmed from '../order-confirmed';
+import CartProgress from '../progress';
 
 type Props = {};
 
@@ -42,6 +43,7 @@ const CartDrawer = (props: Props) => {
         <DrawerHeader className="w-full flex flex-col items-center justify-center">
           <CartMessage />
         </DrawerHeader>
+        <CartProgress />
         <div className="overflow-auto p-4">
           {checkoutProgress === 'cart-page' ? (
             <CartItems />
