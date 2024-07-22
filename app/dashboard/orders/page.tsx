@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import { formatDistance, subMinutes } from 'date-fns';
 import { MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   Table,
@@ -17,7 +18,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -29,6 +29,7 @@ import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -88,8 +89,8 @@ const DashboardOrdersPage = async () => {
                   <Badge
                     className={
                       uOrder?.status === 'succeeded'
-                        ? 'bg-green-700'
-                        : 'bg-secondary-foreground'
+                        ? 'bg-green-700 hover:bg-green-800'
+                        : 'bg-yellow-700 hover:bg-yellow-800'
                     }
                   >
                     {uOrder.status}
@@ -114,11 +115,27 @@ const DashboardOrdersPage = async () => {
                             </Button>
                           </DialogTrigger>
                         </DropdownMenuItem>
+                        {uOrder.status === 'succeeded' && uOrder.receiptURL && (
+                          <DropdownMenuItem>
+                            <Button
+                              asChild
+                              variant={'ghost'}
+                              className="w-full"
+                            >
+                              <Link href={uOrder.receiptURL} target="_blank">
+                                Download receipt
+                              </Link>
+                            </Button>
+                          </DropdownMenuItem>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
-                    <DialogContent>
+                    <DialogContent className="rounded-sm">
                       <DialogHeader>
                         <DialogTitle>Order Details #{uOrder.id}</DialogTitle>
+                        <DialogDescription>
+                          Your order total: ${uOrder.total}
+                        </DialogDescription>
                       </DialogHeader>
                       <Card className="overflow-auto p-2 flex flex-col gap-4">
                         <Table>

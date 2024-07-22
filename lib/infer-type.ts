@@ -36,3 +36,14 @@ export type VariantsWithImagesTagsProduct = InferResultType<
 >;
 
 export type ReviewsWithUser = InferResultType<'reviews', { user: true }>;
+
+export type TotalOrdersWithProductsDetails = InferResultType<
+  'orderProduct',
+  {
+    order: { with: { user: true } };
+    product: true;
+    productVariants: {
+      with: { variantImages: true };
+    };
+  }
+>;
