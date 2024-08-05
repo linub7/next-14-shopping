@@ -35,7 +35,7 @@ const HomeProducts = (props: Props) => {
         >
           <div className="flex flex-col">
             <Image
-              className="rounded-md pb-2 flex-1"
+              className="rounded-md w-full h-96 object-cover pb-2 flex-1"
               src={variant.variantImages[0].url}
               alt={variant.product.title}
               width={720}

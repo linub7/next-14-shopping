@@ -18,6 +18,7 @@ export const deleteProduct = actionClient
         .where(eq(products.id, id))
         .returning();
       revalidatePath('/dashboard/products');
+      revalidatePath('/');
       return {
         success: `Product ${deletedProduct[0].title} deleted successfully.`,
       };

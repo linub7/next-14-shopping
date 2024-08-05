@@ -31,9 +31,6 @@ const ActionCell = ({ row }: { row: Row<ProductColumn> }) => {
       if (data?.data?.success) toast.success(data?.data?.success);
       if (data?.data?.error) toast.error(data?.data?.error);
     },
-    onExecute(data) {
-      toast.loading('Product is deleting');
-    },
   });
 
   const product = row.original;
